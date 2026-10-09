@@ -73,7 +73,7 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(auth -> auth
-
+            .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
                 // PUBLIC AUTHENTICATION ENDPOINTS
                 .requestMatchers(
                         HttpMethod.POST,
