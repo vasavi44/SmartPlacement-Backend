@@ -30,31 +30,35 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+  @Bean
+public CorsConfigurationSource corsConfigurationSource() {
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
 
-        CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOriginPatterns(
+        List.of(
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "https://smart-placement-frontend-puce.vercel.app",
+            "https://smart-placement-frontend-*-vasavi44.vercel.app"
+        )
+    );
 
-        configuration.setAllowedOrigins(
-                List.of("http://localhost:5174")
-        );
+    configuration.setAllowedMethods(
+        List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    );
 
-        configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        );
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(true);
 
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
+    UrlBasedCorsConfigurationSource source =
+        new UrlBasedCorsConfigurationSource();
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
 
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
-    }
-
+    return source;
+}
+    
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http) throws Exception {
