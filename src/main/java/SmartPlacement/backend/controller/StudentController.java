@@ -100,11 +100,6 @@ public class StudentController {
                                 )
                         );
 
-        // Student / Roll Number
-        student.setStudentId(
-                updatedStudent.getStudentId()
-        );
-
         // Personal information
         student.setName(
                 updatedStudent.getName()
